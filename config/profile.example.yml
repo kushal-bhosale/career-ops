@@ -101,6 +101,18 @@ location:
 # sg:
 #   work_status: "foreign"
 
+# Optional. Only read by the India market mode (modes/in/), see its README.
+# Values the apply mode copies into Indian forms; any key left null makes it
+# ask you instead of guessing. Current/expected CTC live under compensation
+# (current_ctc_lpa, expected_ctc_lpa); CV variants under cv (variants,
+# variant_routing).
+# india:
+#   notice_status: "not serving"   # serving | not serving | negotiable
+#   total_experience_years: null
+#   relevant_experience_years: null
+#   preferred_cities: ["Bengaluru", "Mumbai"]
+#   open_to_relocate: true
+
 # Optional. If you have a documented disability, some jurisdictions run
 # affirmative/quota hiring for it (e.g. Brazil's Lei de Cotas, Lei 8.213/91 --
 # employers with 100+ staff must reserve 2-5% of roles for PcD candidates).

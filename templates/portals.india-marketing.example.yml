@@ -1,0 +1,168 @@
+# Portal Scanner Configuration -- India, B2B marketing
+#
+# A starting portals.yml for marketing candidates in India (founding marketer,
+# head of marketing, PMM, demand gen, comms, events, content). Copy it to
+# portals.yml in the project root, then edit. The full option reference is
+# templates/portals.example.yml; this file only sets what India needs.
+#
+# Discovery in India runs on three lanes:
+#   1. search_queries  -- WebSearch with site: filters over Naukri, IIM Jobs,
+#                         LinkedIn, Instahyre, Cutshort, Wellfound, foundit and
+#                         the public ATS hosts. Run by the `scan` mode in your
+#                         AI CLI. Results can be stale; liveness check runs first.
+#   2. tracked_companies -- Indian companies whose own ATS board has a public
+#                         API (Lever, Greenhouse, Ashby, ...). Zero-token via
+#                         `node scan.mjs`. Grow this list with
+#                         `node discover-ats.mjs --in config/india-companies.yml --summary`
+#                         and add the hits with `--write`.
+#   3. job-alert emails -- Naukri, IIM Jobs, LinkedIn and Instahyre alerts sent
+#                         to your Gmail, labelled by a Gmail filter, read by the
+#                         gmail plugin (`node plugins.mjs run gmail`). See
+#                         modes/in/README.md. This is the way to cover portals
+#                         that block scrapers without breaking their terms.
+#
+# The scanner never logs in to any portal and never applies.
+
+title_filter:
+  # Broad on purpose: any title with "Marketing" passes, then the negative
+  # list drops junior and non-B2B roles. Real titles vary too much
+  # ("GM - Marketing", "Director, Marketing", "Marketing Lead - India") for a
+  # list of exact phrases. The evaluation step does the fine sorting.
+  positive:
+    - "Marketing"
+    - "Marketer"
+    - "PMM"
+    - "Corporate Communications"
+    - "Communications Manager"
+    - "Communications Lead"
+    - "Head of Communications"
+    - "Corporate Comms"
+    - "Public Relations"
+    - "PR & Communications"
+    - "word:PR Manager"
+    - "Brand Manager"
+    - "Brand Lead"
+    - "Demand Gen"
+    - "word:ABM"
+    - "Content Lead"
+    - "Head of Content"
+    - "Events Manager"
+    - "Event Manager"
+    - "Community Lead"
+  negative:
+    - "word:Intern"
+    - "word:Interns"
+    - "Internship"
+    - "Trainee"
+    - "Fresher"
+    - "Executive - Marketing"
+    - "Marketing Executive"
+    - "Marketing Associate"
+    - "Telecaller"
+    - "Tele Sales"
+    - "Field Sales"
+    - "Medical Representative"
+    - "Real Estate"
+    - "Performance Marketing Executive"
+    - "Social Media Executive"
+    - "Graphic Designer"
+    - "Video Editor"
+    - "Digital Marketing Executive"
+    - "Marketing Coordinator"
+    - "Marketing Analyst"
+    - "Marketing Operations Specialist"
+    - "Sales & Marketing Executive"
+    - "Telemarketing"
+    - "Network Marketing"
+    - "Affiliate Marketing Executive"
+
+location_filter:
+  allow:
+    - "India"
+    - "Bengaluru"
+    - "Bangalore"
+    - "Mumbai"
+    - "Navi Mumbai"
+    - "Thane"
+    - "Pune"
+    - "Gurugram"
+    - "Gurgaon"
+    - "Noida"
+    - "Delhi"
+    - "Hyderabad"
+    - "Chennai"
+    - "Remote"
+  block_hard:
+    - "Indiana"
+    - "Indianapolis"
+
+scan_history:
+  recheck_after_days: 30
+
+search_queries:
+  # -- Indian job portals --
+  - name: IIM Jobs - senior B2B marketing
+    query: 'site:iimjobs.com ("Head of Marketing" OR "Marketing Head" OR "Founding Marketer" OR "Director Marketing" OR "GM Marketing") (B2B OR SaaS OR fintech)'
+    enabled: true
+
+  - name: IIM Jobs - PMM / comms / events
+    query: 'site:iimjobs.com ("Product Marketing" OR "Corporate Communications" OR "Events Marketing" OR "Demand Generation") (B2B OR SaaS OR fintech OR BFSI)'
+    enabled: true
+
+  - name: Naukri - senior B2B marketing
+    query: 'site:naukri.com/job-listings ("Head of Marketing" OR "Marketing Lead" OR "Senior Marketing Manager" OR "Founding Marketer") (B2B OR SaaS OR fintech)'
+    enabled: true
+
+  - name: Naukri - PMM / comms / demand gen
+    query: 'site:naukri.com/job-listings ("Product Marketing Manager" OR "Corporate Communications Manager" OR "Demand Generation Manager") (B2B OR SaaS OR fintech)'
+    enabled: true
+
+  - name: LinkedIn - founding / head of marketing India
+    query: 'site:linkedin.com/jobs/view ("Founding Marketer" OR "Head of Marketing" OR "Marketing Lead") (India OR Bengaluru OR Mumbai OR Pune OR Gurugram) (B2B OR SaaS OR fintech)'
+    enabled: true
+
+  - name: LinkedIn - PMM / comms India
+    query: 'site:linkedin.com/jobs/view ("Product Marketing Manager" OR "Corporate Communications" OR "Demand Generation") (India OR Bengaluru OR Mumbai OR Pune) (B2B OR SaaS OR fintech)'
+    enabled: true
+
+  - name: Instahyre - marketing
+    query: 'site:instahyre.com ("Head of Marketing" OR "Product Marketing" OR "Marketing Manager") (B2B OR SaaS OR fintech)'
+    enabled: true
+
+  - name: Cutshort - marketing
+    query: 'site:cutshort.io ("Head of Marketing" OR "Product Marketing" OR "Founding Marketer" OR "Marketing Lead")'
+    enabled: true
+
+  - name: Wellfound - India marketing
+    query: 'site:wellfound.com/jobs ("Head of Marketing" OR "Founding Marketer" OR "Product Marketing") (India OR Bengaluru OR Mumbai)'
+    enabled: true
+
+  - name: foundit - B2B marketing
+    query: 'site:foundit.in ("Head of Marketing" OR "Product Marketing Manager" OR "Corporate Communications") (B2B OR SaaS OR fintech)'
+    enabled: false
+
+  # -- Company ATS hosts, India-located roles --
+  - name: Lever - India marketing
+    query: 'site:jobs.lever.co ("Head of Marketing" OR "Product Marketing" OR "Marketing Manager" OR "Corporate Communications") (Bengaluru OR Bangalore OR Mumbai OR Pune OR Gurugram OR India)'
+    enabled: true
+
+  - name: Greenhouse - India marketing
+    query: 'site:job-boards.greenhouse.io OR site:job-boards.eu.greenhouse.io ("Head of Marketing" OR "Product Marketing" OR "Marketing Manager") (Bengaluru OR Mumbai OR Pune OR Gurugram OR India)'
+    enabled: true
+
+  - name: Ashby - India marketing
+    query: 'site:jobs.ashbyhq.com ("Head of Marketing" OR "Founding Marketer" OR "Product Marketing" OR "Marketing Manager") (India OR Bengaluru OR Mumbai)'
+    enabled: true
+
+  - name: Darwinbox / Keka - marketing
+    query: '(site:darwinbox.in OR site:keka.com) ("Head of Marketing" OR "Product Marketing" OR "Marketing Manager")'
+    enabled: false
+
+tracked_companies:
+  # Seed entry, seen live on 2026-10-22 via a public posting URL. Add more with
+  # discover-ats.mjs (see header) rather than by hand-guessing board slugs.
+  - name: Groww
+    careers_url: https://job-boards.eu.greenhouse.io/groww
+    enabled: true
+
+job_boards: []

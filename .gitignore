@@ -1,6 +1,8 @@
 # Personal data (user fills these)
 cv.md
 article-digest.md
+cvs/
+config/india-companies.yml
 local/
 # Data-root marker (DATA_CONTRACT.md "Custom Data Directory"). It holds a path
 # on this machine only, so committing it would point every other clone at a

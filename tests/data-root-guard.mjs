@@ -30,10 +30,12 @@ import { walkTree } from '../lib/walk-tree.mjs';
 export const GUARDED_PATHS = [
   'cv.md',
   'article-digest.md',
+  'cvs',
   'voice-dna.md',
   'portals.yml',
   'config/profile.yml',
   'config/plugins.yml',
+  'config/india-companies.yml',
   'modes/_profile.md',
   'modes/_custom.md',
   'modes/_brief.md',
