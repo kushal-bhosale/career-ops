@@ -48,6 +48,8 @@ jobs:
               /^modes\/_brief\.md$/,
               /^portals\.yml$/,
               /^article-digest\.md$/,
+              /^cvs\//,
+              /^config\/india-companies\.yml$/,
               /^opencode\.json$/,
               /^plugins\.lock$/,
               /^plugins\.local\//,

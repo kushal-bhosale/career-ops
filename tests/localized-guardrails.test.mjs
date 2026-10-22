@@ -16,7 +16,7 @@ const requiredGuardrails = [
   '<!-- guardrail:agency-confirmation -->',
 ];
 const expectedLocalizedModes = [
-  'ar', 'da', 'de', 'es', 'fr', 'hi', 'id', 'it', 'ja',
+  'ar', 'da', 'de', 'es', 'fr', 'hi', 'id', 'in', 'it', 'ja',
   'ko', 'nl', 'pl', 'pt', 'ru', 'sg', 'tr', 'ua', 'zh-TW', 'zh',
 ];
 
